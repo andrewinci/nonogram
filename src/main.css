@@ -1,0 +1,44 @@
+h1 {
+    font-family: monospace;
+}
+
+.menu {
+    height: 2em;
+}
+
+.nonogram-table {
+    position: absolute;
+    left: 50%;
+    top: 10em;
+}
+
+table {
+    border-spacing: 0;
+}
+
+tr, td {
+    border: 1px solid;
+    border-color: gray;
+    border-spacing: 0;
+    height: 2em;
+    width: 2em;
+}
+
+.num-cell {
+    height: 2em;
+    width: 2em;
+    border: 0;
+    text-align: center;
+}
+
+.full-cell {
+    background-color: black;
+}
+
+.empty-cell {
+    background-color: white;
+}
+
+.cross-cell {
+    background-color: pink;
+}
