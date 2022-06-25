@@ -11,5 +11,8 @@ const sample: Nonogram = {
         [CellStatus.Cross, CellStatus.Empty, CellStatus.Full]]
 }
 
-const table = new Table("nonogram")
+const table = new Table("nonogram", (r, c) => {
+    sample.body[r-1][c-1] = CellStatus.Full
+    table.draw(sample)
+})
 table.draw(sample)

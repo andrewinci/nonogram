@@ -8,7 +8,7 @@ const CLASS_EMPTY_CELL = "empty-cell"
 export default class Table {
     htmlTable: HTMLTableElement
 
-    constructor(htmlTableId: string) {
+    constructor(htmlTableId: string, public onClick: (r: number, c: number) => void) {
         // retrieve the table container
         this.htmlTable = document.getElementById(htmlTableId) as HTMLTableElement
         if (!this.htmlTable)
@@ -36,31 +36,30 @@ export default class Table {
         for (let i = 0; i < nonogram.rowHeader.length; i++) {
             let rowContent: (string | CellStatus)[] = [nonogram.rowHeader[i].map(n => n.toString()).join(' ')]
             tableBody.appendChild(
-                this.buildRow(rowContent.concat(nonogram.body[i]))
+                this.buildRow(rowContent.concat(nonogram.body[i]), i + 1)
             )
         }
     }
 
-    buildRow(content: (string | CellStatus)[]): HTMLTableRowElement {
+    buildRow(content: (string | CellStatus)[], rowIndex: number = 0): HTMLTableRowElement {
         const row = document.createElement('tr')
-        content.forEach(c => {
+        content.forEach((content, colIndex) => {
             const td = document.createElement('td')
-            if (typeof c === 'string') {
+            // no need to capture click on the headers
+            if (rowIndex != 0 && colIndex != 0)
+                td.addEventListener('click', () => this.onClick(rowIndex, colIndex))
+            if (typeof content === 'string') {
                 td.classList.add(CLASS_NUM_CELL)
-                td.innerHTML = c
+                td.innerHTML = content
             }
             else {
-                switch (c) {
+                switch (content) {
                     case CellStatus.Cross:
                         td.classList.add(CLASS_CROSS_CELL)
                         //todo: support
                         break
                     case CellStatus.Empty:
                         td.classList.add(CLASS_EMPTY_CELL)
-                        td.addEventListener('click', (e) => {
-                            td.classList.remove(CLASS_EMPTY_CELL)
-                            td.classList.add(CLASS_FULL_CELL)
-                        })
                         break
                     case CellStatus.Full:
                         td.classList.add(CLASS_FULL_CELL)
