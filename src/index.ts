@@ -39,7 +39,18 @@ class NonogramGame {
 }
 
 const game = new NonogramGame()
-const nonogram = game.generate(5)
+
+function getSize(): number {
+    const res = (document.getElementById('size-input') as HTMLInputElement).value
+    return Number.parseInt(res, 10)
+}
+
+var nonogram = game.generate(getSize())
+
+document.getElementById('generate-button').addEventListener('click', () => {
+    nonogram = game.generate(getSize())
+    table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)
+})
 
 const hintButton = document.getElementById('hint-button')
 hintButton?.addEventListener('mousedown', () => {
