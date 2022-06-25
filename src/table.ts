@@ -19,9 +19,9 @@ export default class Table {
         this.htmlTable.children[0].remove()
     }
 
-    draw(nonogram: Nonogram) {
+    draw(columnHeader: number[][], rowHeader: number[][], body: CellStatus[][]) {
         // check nonogram consistency
-        if (nonogram.columnHeader.length != nonogram.rowHeader.length)
+        if (columnHeader.length != rowHeader.length)
             throw new Error("Inconsistent nonogram table")
         // cleanup any table content
         this.clean()
@@ -30,13 +30,13 @@ export default class Table {
         this.htmlTable.appendChild(tableBody)
         // add the columns header
         tableBody.appendChild(this.buildRow([''].concat(
-            nonogram.columnHeader.map(col => col.map(n => n.toString()).join('<br/>'))
+            columnHeader.map(col => col.map(n => n.toString()).join('<br/>'))
         )))
         // add the body
-        for (let i = 0; i < nonogram.rowHeader.length; i++) {
-            let rowContent: (string | CellStatus)[] = [nonogram.rowHeader[i].map(n => n.toString()).join(' ')]
+        for (let i = 0; i < rowHeader.length; i++) {
+            let rowContent: (string | CellStatus)[] = [rowHeader[i].map(n => n.toString()).join(' ')]
             tableBody.appendChild(
-                this.buildRow(rowContent.concat(nonogram.body[i]), i + 1)
+                this.buildRow(rowContent.concat(body[i]), i + 1)
             )
         }
     }

@@ -39,10 +39,18 @@ class NonogramGame {
 }
 
 const game = new NonogramGame()
-const gameBody = game.generate(10)
+const nonogram = game.generate(5)
+
+const hintButton = document.getElementById('hint-button')
+hintButton?.addEventListener('mousedown', () => {
+    table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.expected)
+})
+hintButton?.addEventListener('mouseup', () => {
+    table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)
+})
 
 const table = new Table("nonogram", (r, c) => {
-    gameBody.body[r - 1][c - 1] = CellStatus.Full
-    table.draw(gameBody)
+    nonogram.body[r - 1][c - 1] = CellStatus.Full
+    table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)
 })
-table.draw(gameBody)
+table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)
