@@ -5,5 +5,6 @@ export enum CellStatus {
 export interface Nonogram {
     columnHeader: number[][]
     rowHeader: number[][]
-    body: CellStatus[][]
+    body: CellStatus[][],
+    expected: CellStatus[][]
 }

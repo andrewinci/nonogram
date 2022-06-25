@@ -2,26 +2,8 @@ import './main.css'
 import { Nonogram, CellStatus } from './model'
 import Table from './table'
 
-const sample: Nonogram = {
-    columnHeader: [[1, 2, 3], [3, 3], [6]],
-    rowHeader: [[6], [3, 4], [2]],
-    body: [
-        [CellStatus.Cross, CellStatus.Empty, CellStatus.Full],
-        [CellStatus.Empty, CellStatus.Full, CellStatus.Cross],
-        [CellStatus.Cross, CellStatus.Empty, CellStatus.Full]]
-}
-
 class NonogramGame {
-    private generateHeader(cells: boolean[]) {
-        let header = [0]
-        for (const c of cells) {
-            if (c) header[header.length - 1] += 1
-            else if (header[header.length - 1] != 0) header.push(0)
-        }
-        // remove last 0 if any
-        if (header[header.length - 1] == 0) header.pop()
-        return header
-    }
+
     generate(size: number): Nonogram {
         const res = Array(size).fill(0).map(() => Array(size).fill(0).map(() => this.randBoolean()))
         const rowHeader = res.map(row => this.generateHeader(row))
@@ -32,19 +14,33 @@ class NonogramGame {
         }
 
         return {
-            body: res.map(r => r.map(c => c ? CellStatus.Full : CellStatus.Empty)),
+            expected: res.map(r => r.map(c => c ? CellStatus.Full : CellStatus.Empty)),
+            body: res.map(r => r.map(() => CellStatus.Empty)),
             rowHeader: rowHeader,
             columnHeader: colHeader
         }
     }
 
     randBoolean(): boolean {
-        return Math.random() >= 0.5;
+        return Math.random() >= 0.4;
     }
+
+    private generateHeader(cells: boolean[]) {
+        let header = [0]
+        for (const c of cells) {
+            if (c) header[header.length - 1] += 1
+            else if (header[header.length - 1] != 0) header.push(0)
+        }
+        // remove last 0 if any
+        if (header[header.length - 1] == 0) header.pop()
+        return header
+    }
+
 }
 
 const game = new NonogramGame()
 const gameBody = game.generate(10)
+
 const table = new Table("nonogram", (r, c) => {
     gameBody.body[r - 1][c - 1] = CellStatus.Full
     table.draw(gameBody)
