@@ -10,6 +10,7 @@ h1 {
     position: absolute;
     left: 50%;
     top: 10em;
+    transform: translateX(-50%);
 }
 
 table {
@@ -26,9 +27,17 @@ tr, td {
 
 .num-cell {
     height: 2em;
-    width: 2em;
+    width: 6em;
     border: 0;
+    text-align: right;
+    padding-right: 1em;
+}
+
+tr:first-child td {
+    width: 2em;
+    height: 6em;
     text-align: center;
+    padding-right: 0em;
 }
 
 .full-cell {
