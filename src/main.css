@@ -22,6 +22,11 @@ body {
     }
 }
 
+#size-input {
+    width: 3em;
+    text-align: center;
+}
+
 table {
     border-spacing: 0;
     margin: auto;
