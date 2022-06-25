@@ -49,8 +49,12 @@ hintButton?.addEventListener('mouseup', () => {
     table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)
 })
 
-const table = new Table("nonogram", (r, c) => {
-    nonogram.body[r - 1][c - 1] = CellStatus.Full
+const table = new Table("nonogram", (r, c, primary) => {
+    if (nonogram.body[r - 1][c - 1] != CellStatus.Empty)
+        nonogram.body[r - 1][c - 1] = CellStatus.Empty
+    else
+        nonogram.body[r - 1][c - 1] = primary ? CellStatus.Full : CellStatus.Cross
+
     table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)
 })
 table.draw(nonogram.columnHeader, nonogram.rowHeader, nonogram.body)

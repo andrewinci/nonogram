@@ -8,7 +8,7 @@ const CLASS_EMPTY_CELL = "empty-cell"
 export default class Table {
     htmlTable: HTMLTableElement
 
-    constructor(htmlTableId: string, public onClick: (r: number, c: number) => void) {
+    constructor(htmlTableId: string, public onClick: (r: number, c: number, primary: boolean) => void) {
         // retrieve the table container
         this.htmlTable = document.getElementById(htmlTableId) as HTMLTableElement
         if (!this.htmlTable)
@@ -46,8 +46,13 @@ export default class Table {
         content.forEach((content, colIndex) => {
             const td = document.createElement('td')
             // no need to capture click on the headers
-            if (rowIndex != 0 && colIndex != 0)
-                td.addEventListener('click', () => this.onClick(rowIndex, colIndex))
+            if (rowIndex != 0 && colIndex != 0) {
+                td.addEventListener('click', () => this.onClick(rowIndex, colIndex, true))
+                td.addEventListener('contextmenu', (e) => {
+                    this.onClick(rowIndex, colIndex, false)
+                    e.preventDefault();
+                })
+            }
             if (typeof content === 'string') {
                 td.classList.add(CLASS_NUM_CELL)
                 td.innerHTML = content
