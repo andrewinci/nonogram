@@ -29,8 +29,15 @@ export default class Table {
         const tableBody = document.createElement('tbody')
         this.htmlTable.appendChild(tableBody)
         // add the columns header
+        const headerSize = Math.max(...columnHeader.map(h => h.length))
         tableBody.appendChild(this.buildRow([''].concat(
-            columnHeader.map(col => col.map(n => n.toString()).join('<br/>'))
+            columnHeader.map(col => {
+                const numbers = col.map(n => n.toString())
+                return Array(headerSize - numbers.length)
+                    .fill('')
+                    .concat(numbers)
+                    .join('<br>')
+            })
         )))
         // add the body
         for (let i = 0; i < rowHeader.length; i++) {
