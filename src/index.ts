@@ -11,8 +11,25 @@ const sample: Nonogram = {
         [CellStatus.Cross, CellStatus.Empty, CellStatus.Full]]
 }
 
+class NonogramGame {
+    generate(size: number): Nonogram {
+        const res = Array(size).fill(0).map(() => Array(size).fill(0).map(() => this.randBoolean()))
+        return {
+            body: res.map(r => r.map(c => c ? CellStatus.Full : CellStatus.Empty)),
+            rowHeader: Array(size).fill(0).map(() => [0]),
+            columnHeader: Array(size).fill(0).map(() => [0])
+        }
+    }
+
+    randBoolean(): boolean {
+        return Math.random() >= 0.5;
+    }
+}
+
+const game = new NonogramGame()
+const gameBody = game.generate(10)
 const table = new Table("nonogram", (r, c) => {
-    sample.body[r-1][c-1] = CellStatus.Full
-    table.draw(sample)
+    gameBody.body[r - 1][c - 1] = CellStatus.Full
+    table.draw(gameBody)
 })
-table.draw(sample)
+table.draw(gameBody)
