@@ -5,6 +5,20 @@ body {
     background-color: #3e3e3e;
 }
 
+h1 {
+    text-transform: uppercase;
+}
+
+button {
+    font-family: monospace;
+}
+
+p {
+    margin-top: 2em;
+    font-size: small;
+    text-align: center;
+    font-style: italic;
+}
 
 .menu {
     height: 2em;
@@ -30,6 +44,7 @@ body {
 table {
     border-spacing: 0;
     margin: auto;
+    margin-top: 1em;
 }
 
 tr, td {
@@ -66,5 +81,9 @@ tr:first-child td {
 }
 
 .cross-cell {
-    background-color: pink;
+    background-color: white;
+}
+
+.cross-cell::before {
+    content: "❌";
 }
