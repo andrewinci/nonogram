@@ -25,15 +25,9 @@ p {
 }
 
 .container {
+    width: 80%;
     text-align: center;
     margin: auto;
-    width: 100%;
-}
-
-@media screen and (min-width: 800px) {
-    .container {
-        width: 80%;
-    }
 }
 
 #size-input {
@@ -86,4 +80,43 @@ tr:first-child td {
 
 .cross-cell::before {
     content: "❌";
+}
+
+
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+}
+
+/* Portrait mobile phone */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    .container {
+        width: 100%;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 7em;
+    }
+    tr, td {
+        height: 3rem;
+        width: 3rem;
+    }
+    button {
+        font-size: 2rem;
+    }
+    .menu {
+        font-size: 2rem;
+    }
+    input {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 1.7rem;
+    }
+    
+    .num-cell {
+        font-size: 1.2em;
+    }
 }
